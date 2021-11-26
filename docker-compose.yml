@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  workspace:
+    env_file:
+      - .env
+    build:
+      context: ./workspace
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+        - CODE_PATH_CONTAINER=${CODE_PATH_CONTAINER}
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    ports:
+      - "${BROWSERSYNC_HOST_PORT}:3000"
+      - "${BROWSERSYNC_UI_HOST_PORT}:3001"
+      - "${VUE_CLI_SERVE_HOST_PORT}:8080"
+      - "${VUE_CLI_UI_HOST_PORT}:8000"
+    tty: true
+    restart: always
